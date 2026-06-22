@@ -1,0 +1,81 @@
+/* Tables Container */
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--bg-elevated);
+}
+
+/* Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+
+/* Table Head */
+.data-table thead {
+    background: var(--bg-secondary);
+}
+
+.data-table th {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--bg-elevated);
+    white-space: nowrap;
+}
+
+/* Table Body */
+.data-table td {
+    padding: var(--space-3) var(--space-4);
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--bg-elevated);
+}
+
+.data-table tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-tertiary);
+}
+
+/* Table Footer */
+.data-table tfoot {
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+/* Numeric Cells */
+.data-table td.numeric {
+    font-family: var(--font-mono);
+    text-align: right;
+}
+
+/* Status Badges in Tables */
+.data-table .badge {
+    display: inline-flex;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: 500;
+}
+
+.badge-success {
+    background: rgba(74, 222, 128, 0.1);
+    color: var(--accent-green);
+}
+
+.badge-warning {
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--accent-amber);
+}
+
+.badge-danger {
+    background: rgba(251, 113, 133, 0.1);
+    color: var(--accent-rose);
+}

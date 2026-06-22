@@ -1,0 +1,51 @@
+@media print {
+
+    /* Hide interactive elements */
+    .nav-toggle,
+    .theme-toggle,
+    .skip-link,
+    .btn,
+    .pagination,
+    .search-bar {
+        display: none !important;
+    }
+
+    /* Show all tables rows */
+    .data-table tbody tr {
+        display: table-row !important;
+    }
+
+    /* Remove background colors, use black text */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Remove shadows, glows, gradients */
+    .card,
+    .chart-container,
+    .stats-bar,
+    insight {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        background: white !important;
+    }
+
+    /* Ensure links show URLs */
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+
+    /* Break pages sensibly */
+    .chart-section {
+        page-break-inside: avoid;
+    }
+
+    h1,
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

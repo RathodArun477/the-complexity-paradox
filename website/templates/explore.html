@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore — The Complexity Paradox{% endblock %}
+
+{% block meta_description %}Browse and explore the complete dataset of 100+ games across 40 years of development
+history.{% endblock %}
+
+{% block content %}
+<div class="explore-page">
+    <h1 class="text-gradient">Explore the Data</h1>
+    <p class="explore-intro">Browse the full dataset, filter by decade or platform, and search for specific games.</p>
+
+    <section class="data-section">
+        <h2>Game Database</h2>
+        <p class="results-info">
+            {% if search %}
+            Showing {{ games|length }} of {{ total }} results for "{{ search }}" (Page {{ page }} of {{ total_pages }})
+            {% else %}
+            Showing {{ games|length }} of {{ total }} games (Page {{ page }} of {{ total_pages }})
+            {% endif %}
+        </p>
+
+        <form class="search-bar" action="{{ url_for('explore') }}" method="GET">
+            <div class="search-input">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" id="search" name="search" value="{{ search or '' }}"
+                    placeholder="Search games by title, developer, or platform...">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            {% if search %}
+            <a href="{{ url_for('explore') }}" class="btn btn-secondary">Clear</a>
+            {% endif %}
+        </form>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Year</th>
+                        <th>Platform</th>
+                        <th>Team Size</th>
+                        <th>Dev Time</th>
+                        <th>File Size</th>
+                        <th>Metacritic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('game_detail', game_id=game.game_id) }}" class="game-link">
+                                <strong>{{ game.name }}</strong>
+                            </a>
+                        </td>
+                        <td>{{ game.release_year }}</td>
+                        <td>{{ game.platform }}</td>
+                        <td class="numeric">{{ game.peak_team_size | format_team_size }}</td>
+                        <td class="numeric">{{ game.development_time | format_months_short }}</td>
+                        <td class="numeric">{{ game.file_size | format_file_size }}</td>
+                        <td>
+                            {% if game.metacritic_score %}
+                            {% if game.metacritic_score >= 90 %}
+                            <span class="badge badge-success">{{ game.metacritic_score | format_score }}</span>
+                            {% elif game.metacritic_score >= 75 %}
+                            <span class="badge badge-warning">{{ game.metacritic_score | format_score }}</span>
+                            {% else %}
+                            <span class="badge badge-danger">{{ game.metacritic_score | format_score }}</span>
+                            {% endif %}
+                            {% else %}
+                            <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                {% if not games %}
+                <tbody>
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <div class="empty-content">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <path d="M21 21l-4.35-4.35" />
+                                </svg>
+                                <p>No games found</p>
+                                {% if search %}
+                                <p class="empty-hint">Try adjusting your search for "{{ search }}"</p>
+                                <a href="{{ url_for('explore') }}" class="btn btn-secondary">Clear Search</a>
+                                {% else %}
+                                <p class="empty-hint">The databse is empty.</p>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        {% if total_pages > 1 %}
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('explore', page=page-1, per_page=per_page, search=search) }}"
+                class="btn btn-icon">&larr;</a>
+            {% else %}
+            <button class="btn btn-icon" disabled>&larr;</button>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+            {% if p == page %}
+            <button class="btn btn-icon active">{{ p }}</button>
+            {% else %}
+            <a href="{{ url_for('explore', page=p, per_page=per_page, search=search) }}" class="btn btn-icon">{{ p
+                }}</a>
+            {% endif %}
+            {% endfor %}
+
+            {% if page < total_pages %} <a
+                href="{{ url_for('explore', page=page+1, per_page=per_page, search=search) }}" class="btn btn-icon">
+                &rarr;</a>
+                {% else %}
+                <button class="btn btn-icon" disabled>&rarr;</button>
+                {% endif %}
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

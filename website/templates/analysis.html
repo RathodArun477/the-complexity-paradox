@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block title %}Analysis — The Complexity Paradox{% endblock %}
+
+{% block meta_description %}Deep dive into 40 years of game development data. Charts and analysis on team sizes,
+development time, file sizes, and quality metrics.{% endblock %}
+
+{% block content %}
+<div class="analysis-page">
+    <h1 class="text-gradient">The Analysis</h1>
+    <p class="analysis-intro">We analyzed 100+ games across four decades to understand how development complexity
+        evolved. Here is what the data reveals.</p>
+
+    <section class="chart-section">
+        <h2>Development Time Over Decades</h2>
+        <div class="chart-container">
+            <span class="chart-badge live">Live</span>
+            <canvas id="devTimeChart"></canvas>
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4M12 8h.01" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>Key Insight</h3>
+                <p>Average development time quadrupled from 13 months in the 1980s to 52 months in the 2020s. Despite
+                    better tools, scope expansion outpaced efficiency gains.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Q2 - Correlation Heatmap -->
+    <section class="chart-section">
+        <h2>Correlation Heatmap</h2>
+        <div class="chart-container">
+            <span class="chart-badge static">Snapshot</span>
+            <img src="{{ url_for('static', filename='images/q2_correlation_heatmap.png') }}"
+                alt="Correlation heatmap between game development metrics">
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 20V10M12 20V4M6 20v-6" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>Key Insight</h3>
+                <p>Budget and team size are strongly correlated (0.77). File size and release year correlate at 0.74.
+                    But metacritic score shows virtually no correlation with any metric.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Q2b - Strongest Correlations -->
+    <section class="chart-section">
+        <h2>Strongest Correlations</h2>
+        <div class="chart-container">
+            <span class="chart-badge static">Snapshot</span>
+            <img src="{{ url_for('static', filename='images/q2_scatter_correlations.png') }}" alt="...">
+        </div>
+    </section>
+
+    <!-- Q3 - How Development Scaled -->
+    <section class="chart-section">
+        <h2>How Development Scaled Over Decades</h2>
+        <div class="chart-container">
+            <span class="chart-badge live">Live</span>
+            <canvas id="eraChart"></canvas>
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>Key Insight</h3>
+                <p>Teams grew 21× from 6 people to 130. The 1993 Doom team (8 people) versus the 2013 Doom reboot team
+                    (1000+) exemplifies this shift.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <h2>Franchise vs Original IP Budget</h2>
+        <div class="chart-container">
+            <span class="chart-badge static">Snapshot</span>
+            <img src="{{ url_for('static', filename='images/q4_franchise_vs_original_budget.png') }}"
+                alt="Budget comparison between franchise entries and original IP games">
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <h2>How Franchises Grew Over Time</h2>
+        <div class="chart-container">
+            <span class="chart-badge static">Snapshot</span>
+            <img src="{{ url_for('static', filename='images/q5_franchise_growth.png') }}"
+                alt="Budget and file size growth curves for major game franchises">
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <h2>File Size vs Budget Growth</h2>
+        <div class="chart-container">
+            <span class="chart-badge static">Snapshot</span>
+            <img src="{{ url_for('static', filename='images/q6_filesize_vs_budget_growth.png') }}"
+                alt="Normalized growth comparison of file size versus budget across decades">
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>Key Insight</h3>
+                <p>File size grew 18 million times faster than budget. From 0.02 MB to 150,000 MB — driven by HD
+                    textures, voice acting, and open worlds.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <h2>Engine Choice vs Development Time</h2>
+        <div class="chart-container">
+            <span class="chart-badge live">Live</span>
+            <canvas id="engineChart"></canvas>
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>Key Insight</h3>
+                <p>Engine choice barely affects development time. All engine categories average around 40 months — tools
+                    don't solve scope creep.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <h2>Indie vs AAA Divergence</h2>
+        <div class="chart-grid">
+            <div class="chart-container">
+                <span class="chart-badge live">Live</span>
+                <canvas id="divergenceDevTime"></canvas>
+            </div>
+            <div class="chart-container">
+                <span class="chart-badge live">Live</span>
+                <canvas id="divergenceBudget"></canvas>
+            </div>
+            <div class="chart-container">
+                <span class="chart-badge live">Live</span>
+                <canvas id="divergenceTeamSize"></canvas>
+            </div>
+            <div class="chart-container">
+                <span class="chart-badge live">Live</span>
+                <canvas id="divergenceFileSize"></canvas>
+            </div>
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 20V10M12 20V4M6 20v-6" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>Key Insight</h3>
+                <p>AAA ballooned in every metric while indie stayed lean. Average AAA team: 250 people. Average indie
+                    team: 15 people. Same decades, different worlds.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <h2>Does Bigger Mean Better?</h2>
+        <div class="chart-container">
+            <span class="chart-badge static">Snapshot</span>
+            <img src="{{ url_for('static', filename='images/q9_filesize_vs_metacritic.png') }}"
+                alt="Scatter plot of file size versus metacritic score showing zero correlation">
+        </div>
+        <div class="insight">
+            <div class="insight-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 20V10M12 20V4M6 20v-6" />
+                </svg>
+            </div>
+            <div class="insight-content">
+                <h3>The Paradox</h3>
+                <p>Metacritic scores show virtually zero correlation with budget or team size (Spearman r=-0.01,
+                    p=0.954). Some of the highest-rated games were built by tiny teams.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

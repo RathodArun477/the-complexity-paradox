@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}About — The Complexity Paradox{% endblock %}
+
+{% block meta_description %}Learn about the methodology, data sources, and inspiration behind The Complexity Paradox
+project.{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <h1 class="text-gradient">About the Project</h1>
+
+    <p>The Complexity Paradox started with a simple question: as computers got exponentially more powerful, did game
+        development get easier or harder?</p>
+
+    <p>The answer, backed by four decades of data, is surprising. Despite better tools, larger teams, and bigger
+        budgets, the complexity of building a great game has only increased.</p>
+
+    <h2>Methodology</h2>
+    <p>We collected data on 100+ games spanning from the 1980s to the 2020s. For each game, we tracked:</p>
+
+    <ul class="methodology-list">
+        <li>Development team size at peak production</li>
+        <li>Total development time from concept to release</li>
+        <li>Final file size and storage requirements</li>
+        <li>Metacritic score as a proxy for quality</li>
+        <li>Budget estimates where publicly available</li>
+    </ul>
+
+    <p>Data sources include public developer interviews, GDC postmortems, industry reports, and official documentation.
+        When exact numbers were unavailable, we used the most reliable estimates from multiple sources.</p>
+
+    <h2>Tech Stack</h2>
+    <div class="tech-grid">
+        <div class="tech-item">
+            <div class="tech-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+            </div>
+            <div class="tech-item-info">
+                <h4>Flask</h4>
+                <p>Python web framework</p>
+            </div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
+            </div>
+            <div class="tech-item-info">
+                <h4>SQLite</h4>
+                <p>Database engine</p>
+            </div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                </svg>
+            </div>
+            <div class="tech-item-info">
+                <h4>Jinja2</h4>
+                <p>Templating engine</p>
+            </div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 20V10M12 20V4M6 20v-6" />
+                </svg>
+            </div>
+            <div class="tech-item-info">
+                <h4>Chart.js</h4>
+                <p>Data visualization</p>
+            </div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10" />
+                    <polyline points="16 18 22 18 22 12" />
+                    <polyline points="22 12 18 16" />
+                    <line x1="8" y1="9" x2="16" y2="9" />
+                    <line x1="8" y1="13" x2="12" y2="13" />
+                </svg>
+            </div>
+            <div class="tech-item-info">
+                <h4>JavaScript</h4>
+                <p>Live filtering & API calls</p>
+            </div>
+        </div>
+        <div class="tech-item">
+            <div class="tech-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+            </div>
+            <div class="tech-item-info">
+                <h4>Vanilla CSS</h4>
+                <p>Custom design system</p>
+            </div>
+        </div>
+    </div>
+
+    <h2>Inspiration</h2>
+    <p>This project was inspired by the contrast between early game development — where a handful of people could create
+        genre=defining experiences in just months — and modern AAA production, where thousands work for years on a
+        single title.</p>
+
+    <p>We wanted to move beyond anecdotes and see what the data actually says about this shift.</p>
+
+    <div class="author-card">
+        <div class="author-avatar">AR</div>
+        <div class="author-info">
+            <h3>Arun Rathod</h3>
+            <p>Data science enthusiast, building tools to uncover the stories hidden in data.</p>
+            <div class="author-links">
+                <a href="https://github.com/RathodArun477" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:arun477rathod@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/rathod-arun/" target="_blank">Linkedin</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

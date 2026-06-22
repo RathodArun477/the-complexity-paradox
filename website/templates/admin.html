@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin — The Complexity Paradox{% endblock %}
+
+{% block meta_description %}Admin panel for adding games and regenerating charts.{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <h1 class="text-gradient">Admin Panel</h1>
+    <p class="admin-intro">Add a game and refresh all analysis charts.</p>
+
+    <section class="admin-section">
+        <h2>Add Game & Refresh Charts</h2>
+        <form id="admin-form" class="admin-form">
+            <input type="hidden" name="key" value="{{ request.args.get('key', '') }}">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Game Title <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="release_year">Release Year <span class="required">*</span></label>
+                    <input type="number" id="release_year" name="release_year" min="1970" max="2030" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="developer">Developer <span class="required">*</span></label>
+                    <input type="text" id="developer" name="developer" required>
+                </div>
+                <div class="form-group">
+                    <label for="platform">Platform <span class="required">*</span></label>
+                    <input type="text" id="platform" name="platform" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="game_type">Game Type <span class="required">*</span></label>
+                    <select id="game_type" name="game_type" required>
+                        <option value="">Select...</option>
+                        <option value="AAA">AAA</option>
+                        <option value="AA">AA</option>
+                        <option value="Indie">Indie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="publisher">Publisher</label>
+                    <input type="text" id="publisher" name="publisher">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="budget">Budget (USD)</label>
+                    <input type="number" id="budget" name="budget" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="budget_status">Budget Status</label>
+                    <select id="budget_status" name="budget_status">
+                        <option value="Not Disclosed">Not Disclosed</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Estimated">Estimated</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="team_size">Team Size</label>
+                    <input type="number" id="team_size" name="team_size" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="development_time">Development Time (months)</label>
+                    <input type="number" id="development_time" name="development_time" min="1">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="file_size">File Size (MB)</label>
+                    <input type="number" id="file_size" name="file_size" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="metacritic_score">Metacritic Score</label>
+                    <input type="number" id="metacritic_score" name="metacritic_score" min="0" max="100">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="genre">Genre</label>
+                    <input type="text" id="genre" name="genre">
+                </div>
+                <div class="form-group">
+                    <label for="engine">Engine</label>
+                    <input type="text" id="engine" name="engine">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="franchise_name">Franchise Name</label>
+                <input type="text" id="franchise_name" name="franchise_name" placeholder="Standalone for original IP">
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+                <span class="btn-text">Add Game & Refresh Charts</span>
+                <span class="btn-spinner" style="display: none;">Processing...</span>
+            </button>
+        </form>
+
+        <pre id="result-output" class="console-output" style="display: none;"></pre>
+    </section>
+
+    <section class="admin-section">
+        <h2>Bulk Upload Games</h2>
+        <p class="admin-intro">Upload a CSV or Excel (.xlsx) file with multiple games. Bad rows are skipped.</p>
+        <div class="template-downloads">
+            <span class="template-label">Download empty template:</span>
+            <a href="/admin/download-template?format=csv&key={{ request.args.get('key', '') }}"
+                class="btn btn-sm btn-outline" download>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                CSV
+            </a>
+            <a href="/admin/download-template?format=xlsx&key={{ request.args.get('key', '') }}"
+                class="btn btn-sm btn-outline" download>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                Excel
+            </a>
+        </div>
+
+        <form id="bulk-form" class="admin-form" enctype="multipart/form-data">
+            <input type="hidden" name="key" value="{{ request.args.get('key', '') }}">
+
+            <div class="form-group">
+                <label for="bulk-file">Upload File <span class="required">*</span></label>
+                <input type="file" id="bulk-file" name="file" accept=".csv,.xlsx,.xls" required>
+                <small class="form-hint">Required columns: name, release_year, developer, platform, game_type</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="bulk-submit-btn">
+                <span class="btn-text">Upload & Process</span>
+                <span class="btn-spinner" style="display: none;">Processing...</span>
+            </button>
+        </form>
+
+        <pre id="bulk-result-output" class="console-output" style="display: none;"></pre>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('admin-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('submit-btn');
+        const btnText = btn.querySelector('.btn-text');
+        const btnSpinner = btn.querySelector('.btn-spinner');
+        const output = document.getElementById('result-output');
+
+        // Disable button, show spinner
+        btn.disabled = true;
+        btnText.style.display = 'none';
+        btnSpinner.style.display = 'inline';
+        output.style.display = 'none';
+        output.textContent = '';
+
+        const formData = new FormData(this);
+        const key = formData.get('key');
+        const params = new URLSearchParams({ key });
+
+        try {
+            const response = await fetch(`/admin/add-game?${params}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+
+            output.style.display = 'block';
+
+            if (result.success && result.charts_ok) {
+                output.textContent = `✓ ${result.message}\n\nChart output:\n${result.chart_output || 'Done'}`;
+                output.style.color = 'var(--accent-green)';
+                this.reset();
+            } else if (result.success && !result.charts_ok) {
+                output.textContent = `⚠ ${result.message}`;
+                output.style.color = 'var(--accent-amber)';
+                this.reset();
+            } else {
+                const errors = result.errors ? result.errors.join('\n') : result.error;
+                output.textContent = `✗ Error:\n${errors}`;
+                output.style.color = 'var(--accent-rose)';
+            }
+        } catch (err) {
+            output.style.display = 'block';
+            output.textContent = `✗ Network error: ${err}`;
+            output.style.color = 'var(--accent-rose)';
+        } finally {
+            btn.disabled = false;
+            btnText.style.display = 'inline';
+            btnSpinner.style.display = 'none';
+        }
+    });
+
+    // Bulk upload handler
+    document.getElementById('bulk-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('bulk-submit-btn');
+        const btnText = btn.querySelector('.btn-text');
+        const btnSpinner = btn.querySelector('.btn-spinner');
+        const output = document.getElementById('bulk-result-output');
+        const fileInput = document.getElementById('bulk-file');
+
+        if (!fileInput.files.length) {
+            output.style.display = 'block';
+            output.textContent = '✗ Please select a file';
+            output.style.color = 'var(--accent-rose)';
+            return;
+        }
+
+        btn.disabled = true;
+        btnText.style.display = 'none';
+        btnSpinner.style.display = 'inline';
+        output.style.display = 'none';
+        output.textContent = '';
+
+        const formData = new FormData(this);
+        const key = formData.get('key');
+        const params = new URLSearchParams({ key });
+
+        try {
+            const response = await fetch(`/admin/bulk-upload?${params}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+
+            output.style.display = 'block';
+
+            if (result.success) {
+                let msg = `Processing complete:\n`;
+                msg += `✓ Added: ${result.added} games\n`;
+
+                if (result.skipped && result.skipped.length > 0) {
+                    msg += `⚠ Skipped: ${result.skipped.length}\n\n`;
+                    for (const skip of result.skipped) {
+                        msg += `Row ${skip.row}: "${skip.name}" — ${skip.reason}\n`;
+                    }
+                } else {
+                    msg += `⚠ Skipped: 0\n`;
+                }
+
+                if (!result.charts_ok) {
+                    msg += `\n⚠ Chart regeneration issue:\n${result.chart_output}`;
+                }
+
+                output.textContent = msg;
+                output.style.color = result.added > 0 ? 'var(--accent-green)' : 'var(--accent-amber)';
+
+                if (result.added > 0) {
+                    this.reset();
+                }
+            } else {
+                const errors = result.errors ? result.errors.join('\n') : result.error || 'Unknown error';
+                output.textContent = `✗ Error:\n${errors}`;
+                output.style.color = 'var(--accent-rose)';
+            }
+        } catch (err) {
+            output.style.display = 'block';
+            output.textContent = `✗ Network error: ${err}`;
+            output.style.color = 'var(--accent-rose)';
+        } finally {
+            btn.disabled = false;
+            btnText.style.display = 'inline';
+            btnSpinner.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

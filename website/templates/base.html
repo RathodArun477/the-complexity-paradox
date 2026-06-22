@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="{% block meta_description %}Exploring the paradox of complexity in data science{% endblock %}">
+    <title>{% block title %}The Complexity Paradox{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head_styles %}{% endblock %}
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="nav" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-brand" aria-label="The Complexity Paradox - Home">
+                The Complexity Paradox
+            </a>
+
+            <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu"
+                aria-label="Toggle navigation menu">
+                <span class="hamburger" aria-hidden="true"></span>
+            </button>
+
+            <ul class="nav-links" id="nav-menu" role="menubar">
+                <li role="none">
+                    <a href="{{ url_for('index') }}" role="menuitem" {% if request.endpoint=='index'
+                        %}aria-current="page" {% endif %}>Home</a>
+                </li>
+                <li role="none">
+                    <a href="{{ url_for('analysis') }}" role="menuitem" {% if request.endpoint=='analysis'
+                        %}aria-current="page" {% endif %}>Analysis</a>
+                </li>
+                <li role="none">
+                    <a href="{{ url_for('explore') }}" role="menuitem" {% if request.endpoint=='explore'
+                        %}aria-current="page" {% endif %}>Explore</a>
+                </li>
+                <li role="none">
+                    <a href="{{ url_for('about') }}" role="menuitem" {% if request.endpoint=='about'
+                        %}aria-current="page" {% endif %}>About</a>
+                </li>
+            </ul>
+
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="sun-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5" />
+                    <path
+                        d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+                <svg class="moon-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content" class="main-content">
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %} -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-brand">The Complexity Paradox</p>
+            <p class="footer-text">A Data Science Project by Arun Rathod</p>
+            <div class="footer-links">
+                <a href="https://github.com/RathodArun477" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:arun477rathod@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/rathod-arun/" target="_blank">LinkedIn</a>
+            </div>
+            <p class="footer-year">{% block footer_year %}2026{% endblock %}</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/formatters.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

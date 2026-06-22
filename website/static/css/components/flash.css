@@ -1,0 +1,23 @@
+.flash-messages {
+    max-width: var(--max-width);
+    margin: var(--space-4) auto;
+    padding: 0 var(--space-4);
+}
+
+.flash {
+    padding: var(--space-4);
+    border-radius: var(--radius);
+    margin-bottom: var(--space-4);
+}
+
+.flash-success {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+}
+
+.flash-danger {
+    background: rgba(251, 113, 133, 0.1);
+    border: 1px solid var(--accent-rose);
+    color: var(--accent-rose);
+}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ game.name }} — The Complexity Paradox{% endblock %}
+
+{% block content %}
+<div class="game-detail-page">
+    <div class="game-detail-header">
+        <h1 class="text-gradient">{{ game.name }}</h1>
+        <div class="game-meta">
+            <span class="badge">{{ game.game_type }}</span>
+            <span>{{ game.release_year }} · {{ game.era }}</span>
+        </div>
+    </div>
+
+    <div class="detail-grid two-col">
+        <div class="detail-card">
+            <h3>Development</h3>
+            <div class="detail-row">
+                <dt>Developer</dt>
+                <dd>{{ game.developer }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Publisher</dt>
+                <dd>{{ game.publisher or '—' }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Platform</dt>
+                <dd>{{ game.platform }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Genre</dt>
+                <dd>{{ game.genre or '—' }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Engine</dt>
+                <dd>{{ game.engine or '—' }}</dd>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <h3>Metrics & Quality</h3>
+            <div class="detail-row">
+                <dt>Budget</dt>
+                <dd>{{ game.budget | format_budget if game.budget else '—' }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Budget Status</dt>
+                <dd>{{ game.budget_status }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Team Size</dt>
+                <dd>{{ game.peak_team_size | format_team_size if game.peak_team_size else '—' }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Dev Time</dt>
+                <dd>{{ game.development_time | format_months if game.development_time else '—' }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>File Size</dt>
+                <dd>{{ game.file_size | format_file_size if game.file_size else '—' }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Metacritic</dt>
+                <dd>
+                    {% if game.metacritic_score %}
+                    <span class="badge badge-success">{{ game.metacritic_score | format_score }}</span>
+                    {% else %}
+                    —
+                    {% endif %}
+                </dd>
+            </div>
+            <div class="detail-row">
+                <dt>Franchise</dt>
+                <dd>{{ game.franchise_name or 'Standalone' }}</dd>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ url_for('explore') }}" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to Explore
+    </a>
+</div>
+{% endblock %}
