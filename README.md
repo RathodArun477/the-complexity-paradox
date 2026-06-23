@@ -2,7 +2,7 @@
 
 A full-stack data analysis project exploring whether game development has actually gotten easier as technology has improved — or harder. Built on 100+ games spanning four decades (1980s–2020s), with searchable data and interactive charts.
 
-🔗 [Live Demo](your-deployed-url-here)
+🔗 [Live Demo](https://complexity-paradox.onrender.com/)
 
 ## About the Project
 
