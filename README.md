@@ -48,7 +48,7 @@ This project collects and analyzes data across development team size, total dev 
 ### Prerequisites
 - Python 3.10+
 - pip
-- A free [Truso](https://turso.tech) account and database
+- A free [Turso](https://turso.tech) account and database
 
 ### Installation
 
