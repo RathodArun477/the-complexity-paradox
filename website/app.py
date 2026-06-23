@@ -35,6 +35,10 @@ def get_db():
         g.db = get_connection()
     return g.db
 
+def clean_df(df):
+    """Replace NaN/Inf with None for JSON safety."""
+    return df.replace({float('nan'): None, float('inf'): None, float('-inf'): None})
+
 @app.teardown_appcontext
 def close_db(exception):
     """Close connection after each request."""
@@ -46,6 +50,7 @@ def query_games():
     """Reusable query function with error handling."""
     try:
         df = pd.read_sql_query("SELECT * FROM games", get_db())
+        df = df.replace({float('nan'): None, float('inf'): None, float('-inf'): None})
         return df.to_dict(orient='records')
     except (sqlite3.Error, pd.errors.DatabaseError) as e:
         app.logger.error(f"Database error: {e}")
@@ -131,6 +136,7 @@ def game_detail(game_id):
             get_db(),
             params=(game_id,)
         )
+        df = clean_df(df)
         if df.empty:
             return "Game not found", 404
         
